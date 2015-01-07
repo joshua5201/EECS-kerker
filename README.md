@@ -1,4 +1,4 @@
-eecs
+EECS kerker
 ====
 
-eecs
+EECS kerker
