@@ -1,0 +1,39 @@
+<div class="page-header">
+<h1>Courses</h1>
+</div>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+  new_course_path,
+  :class => 'btn btn-primary' %>
+<% [current_semester, other_semester].each do |semester|%>
+  <h2><%= semester_text[semester]%></h2>
+  <% (1..5).each do |year| %>
+    <h3><%= year_text[year] %></h3>
+    <% crs = @courses.select do |course| %>
+      <% course.year == year && (course.semester == semester or course.semester == 3)%>
+    <% end %>
+    <div class="row">
+      <% crs.each do |c| %>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h1 class="panel-title"><%= c.name %> - <%= c.instructor %></h1>
+            </div>
+            <div class="panel-body">
+              <p>
+              <%= simple_format(c.description.truncate(100))%>
+              </p>
+              <%= link_to 'Show', course_path(c), :class => 'btn btn-xs btn-primary'%>
+              <%= link_to 'Edit', edit_course_path(c), :class => 'btn btn-xs btn-info'%>
+              <%= link_to 'Destroy', course_path(c), method: :delete, data: {confirm: "Are you sure? "}, :class => 'btn btn-xs btn-danger'%>
+            </div>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  <% end %>
+  <hr>
+<% end %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+  new_course_path,
+  :class => 'btn btn-primary' %>

@@ -1,0 +1,112 @@
+<%= nested_form_for @course, :html => { :class => "form-horizontal course" } do |f| %>
+
+  <% if @course.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% @course.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@course[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@course[:description]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :instructor, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :instructor, :class => 'form-control' %>
+    </div>
+    <%= error_span(@course[:instructor]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :year, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select(:year) do %>
+        <% year_text.each_with_index do |yt, i| %>
+          <% if i == 0 %>
+            <% next %>
+          <% end %>
+          <% if @course.year && @course.year == i %>
+            <%= content_tag :option, yt, value: i, selected: 'selected' %>
+          <% else %>
+            <%= content_tag :option, yt, value: i %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <%= error_span(@course[:semester]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :semester, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select(:semester) do %>
+        <% semester_text.each_with_index do |st, i| %>
+          <% if i == 0%>
+            <% next %>
+          <% end %>
+          <% if @course.semester && @course.semester == i %> 
+            <%= content_tag :option, st, value: i, selected: 'selected' %>
+          <% else %>
+            <%= content_tag :option, st, value: i %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <%= error_span(@course[:semester]) %>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Resources: </label>
+  </div>
+  <br>
+  <%= f.fields_for :resources do |rf| %>
+  <div class="control-group">
+    <%= rf.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= rf.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= rf.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= rf.text_field :description, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= rf.label :file, :class => 'control-label' %>
+    <div class="controls">
+      <%= rf.file_field :file, :class => 'form-control' %>
+    </div>
+  </div>
+  <%= rf.link_to_remove "Remove this Resource", :class => 'btn btn-xs btn-danger' %>
+  <br>
+  <br>
+  <% end %>
+  <div class="control-group">
+    <%= f.link_to_add "Add a Resource", :resources, :class => 'btn btn-small btn-info' %>
+  </div>
+  <br>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+    courses_path, :class => 'btn btn-default' %>
+
+<% end %>

@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: resources
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  description :text
+#  file        :string(255)
+#  user_id     :integer
+#  course_id   :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  files: 
+  user_id: 1
+  course_id: 1
+
+two:
+  name: MyString
+  description: MyText
+  files: 
+  user_id: 1
+  course_id: 1
